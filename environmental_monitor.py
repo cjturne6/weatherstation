@@ -106,11 +106,6 @@ myAWSIoTMQTTShadowClient.configureAutoReconnectBackoffTime(1, 32, 20)
 myAWSIoTMQTTShadowClient.configureConnectDisconnectTimeout(10)  # 10 sec
 myAWSIoTMQTTShadowClient.configureMQTTOperationTimeout(5)  # 5 sec
 
-# Initialize Raspberry Pi's I2C interface
-# i2c_bus = busio.I2C(SCL, SDA)
-
-# Intialize SeeSaw, Adafruit's Circuit Python library
-# ss = Seesaw(i2c_bus, addr=0x36)
 
 # Connect to AWS IoT
 myAWSIoTMQTTShadowClient.connect()
@@ -257,7 +252,8 @@ while True:
     print("Temperature: {}".format(temp))
 
     # Create message payload
-    payload = {"state": {"reported": {"pressure": str(pressureLevel), "temp": str(temp)}}}
+#    payload = {"state": {"reported": {"pressure": str(pressureLevel), "temp": str(temp)}}}
+    payload = {"state": {"reported": {"pressure": pressureLevel, "temp": temp}}}
 
     # Update shadow
     deviceShadowHandler.shadowUpdate(json.dumps(payload), customShadowCallback_Update, 5)
